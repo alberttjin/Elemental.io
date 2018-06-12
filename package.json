@@ -1,0 +1,21 @@
+{
+  "name": "Elemental.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alberttjin/Elemental.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alberttjin/Elemental.io/issues"
+  },
+  "homepage": "https://github.com/alberttjin/Elemental.io#readme"
+}
