@@ -6,7 +6,6 @@ const app = express()
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/client/index.html');
 });
-
-
+app.use(express.static(__dirname + "/Client"));
 const PORT = process.env.PORT
-app.listen(PORT || 8081)
+app.listen(PORT || 2000)
