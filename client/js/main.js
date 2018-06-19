@@ -1,4 +1,4 @@
-var game = new Phaser.Game(2000, 1500, Phaser.AUTO, document.getElementById('elemental_game'));
+var game = new Phaser.Game('100', '100', Phaser.AUTO, document.getElementById('elemental_game'));
 
 game.state.add('game', gameState);
 
