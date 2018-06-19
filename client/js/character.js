@@ -1,5 +1,5 @@
 function addCharacter(id, x, y, type, name) {
-    const newChar = characters.create(x, y, type);
+    const newChar = characters.charactersGroup.create(x, y, type);
     newChar.id = id;
     newChar.scale.setTo(0.25, 0.25)
     return newChar;
