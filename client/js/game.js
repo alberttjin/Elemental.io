@@ -4,18 +4,10 @@ var basicAttacks = {};
 
 gameState.init = function() {
   game.stage.disableVisibilityChange = true;
-  //create group for all characters, basicAttacks
-  characters.charactersGroup = game.add.group();
-  basicAttacks.basicAttacksGroup = game.add.group();
+  //initialize characters and attacks
+  initializeCharacters();
+  initializeBasicAttack('doritos', 0, 1000, 540);
 
-  //initiate players
-  characters.allPlayers = [];
-  characters.currPlayer = {};
-
-  //initiate basicAttack
-  basicAttacks.nextFire = 0;
-  basicAttacks.delay = 500;
-  basicAttacks.speed  = 540;
 };
 
 gameState.preload = function() {
@@ -32,9 +24,8 @@ gameState.create = function() {
 
   //start physics and enable physics for all characters
   game.physics.startSystem(Phaser.Physics.ARCADE);
-  characters.charactersGroup.enableBody = true;
-  basicAttacks.basicAttacksGroup.enableBody = true;
-  basicAttacks.basicAttacksGroup.setAll('outOfBoundsKill', true);
+  setCharacterPhysics();
+  setBasicAttackPhysics();
 
   //add character and enemy character for testing
   characters.currPlayer = addCharacter(1, game.world.centerX, game.world.centerY, 'doritos');
@@ -78,16 +69,17 @@ gameState.update = function() {
 
   //set player collision
   var hitPlayer = game.physics.arcade.collide(characters, characters)
-  console.log(hitPlayer)
 
   //fire basic attack upon click
   if (game.input.activePointer.isDown) {
+    console.log("mouse x" + game.input.activePointer.x)
+    console.log("mouse y" + game.input.activePointer.y)
     fireBasicAttack(
       'doritos',
       characters.currPlayer.x,
       characters.currPlayer.y,
-      game.input.mousePointer.x,
-      game.input.mousePointer.y
+      game.input.activePointer.x,
+      game.input.activePointer.y
     );
   }
 };

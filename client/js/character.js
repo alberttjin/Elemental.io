@@ -1,8 +1,18 @@
+function initializeCharacters() {
+  characters.charactersGroup = game.add.group();
+  characters.allPlayers = [];
+  characters.currPlayer = {};
+}
 function addCharacter(id, x, y, type, name) {
     const newChar = characters.charactersGroup.create(x, y, type);
     newChar.id = id;
     newChar.scale.setTo(0.25, 0.25)
     return newChar;
+}
+
+function setCharacterPhysics(){
+  characters.charactersGroup.enableBody = true;
+  characters.charactersGroup.collideWorldBounds = true;
 }
 
 function setWASD() {
