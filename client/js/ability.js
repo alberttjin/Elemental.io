@@ -18,6 +18,6 @@ function fireBasicAttack(type, startX, startY, destX, destY) {
     var attack = basicAttacks.basicAttacksGroup.create(startX, startY, type);
     attack.scale.setTo(0.25, 0.25)
 
-    game.physics.arcade.moveToXY(attack, 0, 0, basicAttacks.speed);
+    game.physics.arcade.moveToXY(attack, destX, destY, basicAttacks.speed);
   }
 }

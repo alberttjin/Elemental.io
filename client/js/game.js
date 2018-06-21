@@ -1,3 +1,26 @@
+/*
+Schema:
+gameState: phaser state for the actual game
+  methods:
+    init: initialize game state
+    preload: preload images/sprites
+    create: create objects/add physics
+    update: called every frame when game updates
+
+characters: object for all character related things
+  attributes:
+    charactersGroup: the phaser group of characters, use this group to create a character
+    allPlayers: object where keys are ids of players and objects are actual the actual players
+    currPlayer: the current player on this client
+
+basicAttacks: object for all basic attack related thigns
+  attributes:
+    basicAttacksGroup: phaser group of basic attacks
+    nextFire: the time at which the person is allowed to fire again
+    delay: the delay between fires, used to calculate nextFire
+    speed: speed of basic attack
+*/
+
 var gameState = {};
 var characters = {}
 var basicAttacks = {};
