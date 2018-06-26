@@ -3,9 +3,22 @@
 <head>
 	<meta charset="UTF-8" />
     <title>ELEMENTAL IO</title>
-    <script src="js/phaser.min.js"></script>
+	<script src="js/phaser.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io();
+
+		socket.on('connect', () => {
+				console.log('Connected to the server.');
+		});
+
+		socket.on('disconnect', () => {
+				console.log('Disconnected from the server.');
+		});
+	</script>
 </head>
 <body>
   hello baby
+  <h1>How's it going beautiful?</h1>
 </body>
 </html>

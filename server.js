@@ -1,11 +1,28 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const socketIO = require('socket.io');
 
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/client/index.html');
-});
+const path = require('path');
+const http = require('http');
+
+const app = express();
+
+var server = http.createServer(app);
+var io = socketIO(server);
 
 const PORT = process.env.PORT || 8081;
-app.listen(PORT, () => {
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/client/index.html'));
+});
+
+io.on('connection', (socket) => {
+  console.log('New User Connected.');
+
+  socket.on('disconnect', () => {
+    console.log('User was disconnected.');
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`App is running on ${PORT}`);
 });
