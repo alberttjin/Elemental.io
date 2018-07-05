@@ -34,16 +34,24 @@ gameState.init = function() {
 };
 
 gameState.preload = function() {
-  //game.load.tilemap('map', 'assets/map/example_map.json', null, Phaser.Tilemap.TILED_JSON);
-  //game.load.spritesheet('tileset', 'assets/map/tilesheet.png',32,32);
-  game.load.image('sky', '../assets/images/sky.jpeg');
   game.load.image('doritos','../assets/sprites/doritos-cool-ranch.png');
+  game.load.tilemap('map', '../assets/tilemaps/newForestMap.json', null, Phaser.Tilemap.TILED_JSON);
+  //game.load.spritesheet('tileset', 'assets/map/tilesheet.png',32,32);
+  game.load.image('tiles', '../assets/images/forest_tiles.png');
+  game.load.image('sky', '../assets/images/sky.jpeg');
 };
 
 gameState.create = function() {
-  bg = game.add.tileSprite(0, 0, 2000, 1000, 'sky');
-  game.world.sendToBack(bg);
-  game.world.setBounds(0, 0, 2000, 1000);
+  // bg = game.add.tileSprite(0, 0, 2000, 1000, 'sky');
+  // game.world.sendToBack(bg);
+  // game.world.setBounds(0, 0, 2000, 1000);
+  map = this.game.add.tilemap('map');
+  map.addTilesetImage('newForestTileset', 'tiles');
+  layer = map.createLayer('Tile Layer 1')
+  layer.resizeWorld();
+  game.world.sendToBack(map)
+  game.world.sendToBack(layer)
+
 
   //start physics and enable physics for all characters
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -91,7 +99,7 @@ gameState.update = function() {
   }
 
   //set player collision
-  var hitPlayer = game.physics.arcade.collide(characters, characters)
+  var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
 
   //fire basic attack upon click
   if (game.input.activePointer.isDown) {
