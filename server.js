@@ -10,7 +10,7 @@ const roomPrefix = 'room-';
 const maxPlayers = 4;
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/client/index.html');
+  res.sendFile(path.join(__dirname, '/client/index.html'));
 });
 app.use(express.static(__dirname + "/Client"));
 
