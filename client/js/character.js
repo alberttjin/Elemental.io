@@ -11,9 +11,11 @@ function addCharacter(id, x, y, type, name) {
   return newChar;
 }
 
-function damageCharacter() {
-
+function damageCharacter(character, amount) {
+  character.damage(amount)
+  console.log(character.health)
 }
+
 function setCharacterPhysics(){
   characters.charactersGroup.enableBody = true;
   characters.charactersGroup.collideWorldBounds = true;

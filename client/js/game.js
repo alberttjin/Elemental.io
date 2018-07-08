@@ -16,6 +16,7 @@ characters: object for all character related things
 basicAttacks: object for all basic attack related thigns
   attributes:
     basicAttacksGroup: phaser group of basic attacks
+    enemyBasicAttacksGroup: phaser group of basic attacks
     nextFire: the time at which the person is allowed to fire again
     delay: the delay between fires, used to calculate nextFire
     speed: speed of basic attack
@@ -60,7 +61,7 @@ gameState.create = function() {
 
   //add character and enemy character for testing
   characters.currPlayer = addCharacter(1, game.world.centerX, game.world.centerY, 'doritos');
-  characters.allPlayers[2] = (addCharacter(2, game.world.centerX + 50, game.world.centerY + 50, 'doritos'));
+  //characters.allPlayers[2] = (addCharacter(2, game.world.centerX + 50, game.world.centerY + 50, 'doritos'));
 
   //set locked camera
   game.camera.follow(characters.currPlayer);
@@ -100,11 +101,18 @@ gameState.update = function() {
 
   //set player collision
   var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
-
+  var hitByBasic = game.physics.arcade.overlap(
+    characters.currPlayer,
+    basicAttacks.basicAttacksGroup,
+    damageCharacter(characters.currPlayer, 1),
+    null,
+    this
+  )
+  // if (hitByBasic) {
+  //   damageCharacter(characters.currPlayer, 1)
+  // }
   //fire basic attack upon click
   if (game.input.activePointer.isDown) {
-    console.log("mouse x" + game.input.activePointer.x)
-    console.log("mouse y" + game.input.activePointer.y)
     fireBasicAttack(
       'doritos',
       characters.currPlayer.x,
