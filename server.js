@@ -3,6 +3,8 @@ const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var path = require('path');
+
 const PORT = process.env.PORT || 3000;
 
 const namespace = '/';
