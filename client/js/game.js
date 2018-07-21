@@ -12,7 +12,11 @@ characters: object for all character related things
     charactersGroup: the phaser group of characters, use this group to create a character
     allPlayers: object where keys are ids of players and objects are actual the actual players
     currPlayer: the current player on this client
-    id: current player id
+    id: temp id
+    x: temp x
+    y: temp y
+    type: temp type
+    name: temp name
 
 basicAttacks: object for all basic attack related thigns
   attributes:
@@ -60,14 +64,19 @@ gameState.create = function() {
   setBasicAttackPhysics();
 
   //add character and enemy character for testing
-  characters.currPlayer = addCharacter(characters.id, game.world.centerX, game.world.centerY, 'doritos');
+  characters.currPlayer = addCharacter(
+    characters.id,
+    characters.x,
+    characters.y,
+    characters.type,
+    characters.name
+  );
 
   //set locked camera
   game.camera.follow(characters.currPlayer);
 
   //set controls
   characters.controls = setWASD();
-  console.log(characters)
 };
 
 gameState.update = function() {
@@ -104,8 +113,6 @@ gameState.update = function() {
 
   //fire basic attack upon click
   if (game.input.activePointer.isDown) {
-    console.log("mouse x" + game.input.activePointer.x)
-    console.log("mouse y" + game.input.activePointer.y)
     fireBasicAttack(
       'doritos',
       characters.currPlayer.x,

@@ -9,6 +9,7 @@ function addCharacter(id, x, y, type, name) {
   newChar.id = id;
   newChar.scale.setTo(0.25, 0.25)
   newChar.setHealth(3);
+  characters.allPlayers[id] = newChar;
   return newChar;
 }
 
@@ -16,8 +17,12 @@ function damageCharacter() {
 
 }
 
-function savePlayerId(id) {
+function savePlayerData(id, x, y, type, name) {
   characters.id = id;
+  characters.x = x;
+  characters.y = y;
+  characters.type = type;
+  characters.name = name;
 }
 
 function setCharacterPhysics(){

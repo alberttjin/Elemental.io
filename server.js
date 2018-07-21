@@ -29,7 +29,15 @@ io.on('connection', (socket) => {
 	stack.push(nextAvailiableRoom);
 	console.log(`Socket (${socket.id}) has joined room ${nextAvailiableRoom}`);
 
-  	socket.on('disconnect', () => {
+  socket.on('newPlayer', data => {
+    socket.to(socketToRoomNum.get(socket.id)).emit('playerJoined', data);
+  });
+
+  socket.on('currentPlayerData', data => {
+    socket.emit('addPlayer', data);
+  });
+
+  socket.on('disconnect', () => {
 		var socketRoom = socketToRoomNum.get(socket.id);
 		console.log(`Socket (${socket.id}) has left room ${nextAvailiableRoom}`);
 		socketToRoomNum.delete(socket.id);
