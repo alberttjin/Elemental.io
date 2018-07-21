@@ -109,8 +109,8 @@ gameState.update = function() {
       'doritos',
       characters.currPlayer.x,
       characters.currPlayer.y,
-      game.input.activePointer.x,
-      game.input.activePointer.y
+      game.input.activePointer.worldX,
+      game.input.activePointer.worldY
     );
   }
 };
