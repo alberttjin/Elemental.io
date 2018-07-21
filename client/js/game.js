@@ -12,6 +12,7 @@ characters: object for all character related things
     charactersGroup: the phaser group of characters, use this group to create a character
     allPlayers: object where keys are ids of players and objects are actual the actual players
     currPlayer: the current player on this client
+    id: current player id
 
 basicAttacks: object for all basic attack related thigns
   attributes:
