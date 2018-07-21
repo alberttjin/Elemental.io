@@ -103,14 +103,12 @@ gameState.update = function() {
   var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
   //fire basic attack upon click
   if (game.input.activePointer.isDown) {
-    const shootToX = game.input.activePointer.x + game.camera.x;
-    const shootToY = game.input.activePointer.y + game.camera.y;
     fireBasicAttack(
       'doritos',
       characters.currPlayer.x,
       characters.currPlayer.y,
-      shootToX,
-      shootToY,
+      game.input.activePointer.worldX,
+      game.input.activePointer.worldY
     );
   }
 };
