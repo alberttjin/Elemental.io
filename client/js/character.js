@@ -2,6 +2,7 @@ function initializeCharacters() {
   characters.charactersGroup = game.add.group();
   characters.allPlayers = [];
   characters.currPlayer = {};
+  characters.schema = [];
 }
 
 function addCharacter(id, x, y, type, name) {
@@ -12,6 +13,20 @@ function addCharacter(id, x, y, type, name) {
   newChar.type = type;
   characters.allPlayers[id] = newChar;
   return newChar;
+}
+
+function addToSchema(schemaObject) {
+  if (!characters.schema) {
+    characters.schema = [];
+  }
+  characters.schema.push(schemaObject);
+}
+
+function addFromSchema() {
+  for (i = 0; i < characters.schema.length; i++) {
+    const char = characters.schema[i];
+    addCharacter(char.id, char.x, char.y, char.type, char.name);
+  }
 }
 
 function damageCharacter() {

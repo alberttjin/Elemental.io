@@ -20,7 +20,7 @@ socket.on('playerJoined', function(data) {
 
 socket.on('addPlayer', function(data) {
 	console.log(characters)
-	addCharacter(data.id, data.x, data.y, data.type, data.name);
+	addToSchema(data);
 });
 
 socket.on('disconnect', function() {

@@ -71,7 +71,8 @@ gameState.create = function() {
     characters.type,
     characters.name
   );
-
+  console.log(characters.schema)
+  addFromSchema();
   //set locked camera
   game.camera.follow(characters.currPlayer);
 
