@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('currentPlayerData', function(data) {
-    socket.emit('addPlayer', data);
+    socket.to(data.newId).emit('addPlayer', data);
   });
 
   socket.on('disconnect', () => {

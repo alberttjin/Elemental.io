@@ -9,6 +9,7 @@ function addCharacter(id, x, y, type, name) {
   newChar.id = id;
   newChar.scale.setTo(0.25, 0.25)
   newChar.setHealth(3);
+  newChar.type = type;
   characters.allPlayers[id] = newChar;
   return newChar;
 }
