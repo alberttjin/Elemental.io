@@ -13,7 +13,7 @@ characters: object for all character related things
     allPlayers: object where keys are ids of players and objects are actual the actual players
     currPlayer: the current player on this client
 
-basicAttacks: object for all basic attack related thigns
+basicAttacks: object for all basic attack related things
   attributes:
     basicAttacksGroup: phaser group of basic attacks
     enemyBasicAttacksGroup: phaser group of basic attacks
@@ -37,15 +37,11 @@ gameState.init = function() {
 gameState.preload = function() {
   game.load.image('doritos','../assets/sprites/doritos-cool-ranch.png');
   game.load.tilemap('map', '../assets/tilemaps/newForestMap.json', null, Phaser.Tilemap.TILED_JSON);
-  //game.load.spritesheet('tileset', 'assets/map/tilesheet.png',32,32);
   game.load.image('tiles', '../assets/images/forest_tiles.png');
   game.load.image('sky', '../assets/images/sky.jpeg');
 };
 
 gameState.create = function() {
-  // bg = game.add.tileSprite(0, 0, 2000, 1000, 'sky');
-  // game.world.sendToBack(bg);
-  // game.world.setBounds(0, 0, 2000, 1000);
   map = this.game.add.tilemap('map');
   map.addTilesetImage('newForestTileset', 'tiles');
   layer = map.createLayer('Tile Layer 1')
@@ -103,15 +99,11 @@ gameState.update = function() {
   var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
   var hitByBasic = game.physics.arcade.overlap(
     characters.currPlayer,
-    basicAttacks.basicAttacksGroup,
-    damageCharacter(characters.currPlayer, 1),
+    basicAttacks.enemyBasicAttacksGroup,
+    damageCharacter,
     null,
     this
   )
-  // if (hitByBasic) {
-  //   damageCharacter(characters.currPlayer, 1)
-  // }
-  //fire basic attack upon click
   if (game.input.activePointer.isDown) {
     fireBasicAttack(
       'doritos',

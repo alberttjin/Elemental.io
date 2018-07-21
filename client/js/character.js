@@ -11,9 +11,9 @@ function addCharacter(id, x, y, type, name) {
   return newChar;
 }
 
-function damageCharacter(character, amount) {
-  character.damage(amount)
-  console.log(character.health)
+function damageCharacter(character, basicAttack) {
+  character.damage(1)
+  basicAttack.kill()
 }
 
 function setCharacterPhysics(){
