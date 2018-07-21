@@ -64,6 +64,7 @@ gameState.create = function() {
 
   //set locked camera
   game.camera.follow(characters.currPlayer);
+  game.camera.setBoundsToWorld();
 
   //set controls
   characters.controls = setWASD();
@@ -100,17 +101,16 @@ gameState.update = function() {
 
   //set player collision
   var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
-
   //fire basic attack upon click
   if (game.input.activePointer.isDown) {
-    console.log("mouse x" + game.input.activePointer.x)
-    console.log("mouse y" + game.input.activePointer.y)
+    const shootToX = game.input.activePointer.x + game.camera.x;
+    const shootToY = game.input.activePointer.y + game.camera.y;
     fireBasicAttack(
       'doritos',
       characters.currPlayer.x,
       characters.currPlayer.y,
-      game.input.activePointer.x,
-      game.input.activePointer.y
+      shootToX,
+      shootToY,
     );
   }
 };
