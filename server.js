@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 
 var path = require('path');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 2000;
 
 const namespace = '/';
 const roomPrefix = 'room-';
@@ -20,7 +20,7 @@ var socketToRoomNum = new Map();
 var stack = [1];
 io.on('connection', (socket) => {
 	var nextAvailiableRoom = stack.pop();
-	if (io.nsps[namespace].adapter.rooms[roomPrefix + nextAvailiableRoom] && 
+	if (io.nsps[namespace].adapter.rooms[roomPrefix + nextAvailiableRoom] &&
 		io.nsps[namespace].adapter.rooms[roomPrefix + nextAvailiableRoom].length == maxPlayers) {
 			nextAvailiableRoom ++;
 		}
