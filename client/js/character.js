@@ -3,6 +3,7 @@ function initializeCharacters() {
   characters.allPlayers = [];
   characters.currPlayer = {};
 }
+
 function addCharacter(id, x, y, type, name) {
   const newChar = characters.charactersGroup.create(x, y, type);
   newChar.id = id;
@@ -14,6 +15,11 @@ function addCharacter(id, x, y, type, name) {
 function damageCharacter() {
 
 }
+
+function savePlayerId(id) {
+  characters.id = id;
+}
+
 function setCharacterPhysics(){
   characters.charactersGroup.enableBody = true;
   characters.charactersGroup.collideWorldBounds = true;

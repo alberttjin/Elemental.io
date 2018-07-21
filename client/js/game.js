@@ -60,14 +60,14 @@ gameState.create = function() {
   setBasicAttackPhysics();
 
   //add character and enemy character for testing
-  characters.currPlayer = addCharacter(1, game.world.centerX, game.world.centerY, 'doritos');
-  characters.allPlayers[2] = (addCharacter(2, game.world.centerX + 50, game.world.centerY + 50, 'doritos'));
+  characters.currPlayer = addCharacter(characters.id, game.world.centerX, game.world.centerY, 'doritos');
 
   //set locked camera
   game.camera.follow(characters.currPlayer);
 
   //set controls
   characters.controls = setWASD();
+  console.log(characters)
 };
 
 gameState.update = function() {
