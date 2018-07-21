@@ -29,11 +29,11 @@ io.on('connection', (socket) => {
 	stack.push(nextAvailiableRoom);
 	console.log(`Socket (${socket.id}) has joined room ${nextAvailiableRoom}`);
 
-  socket.on('newPlayer', data => {
-    socket.to(socketToRoomNum.get(socket.id)).emit('playerJoined', data);
+  socket.on('newPlayer', function(data) {
+    socket.to(getRoomNum(socket.id)).emit('playerJoined', data);
   });
 
-  socket.on('currentPlayerData', data => {
+  socket.on('currentPlayerData', function(data) {
     socket.emit('addPlayer', data);
   });
 
@@ -48,3 +48,7 @@ io.on('connection', (socket) => {
 http.listen(PORT, function() {
 	console.log(`Listening on port: ${PORT}`);
 });
+
+function getRoomNum(socketId) {
+  return roomPrefix + socketToRoomNum.get(socketId);
+}

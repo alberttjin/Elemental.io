@@ -6,6 +6,7 @@ socket.on('connect', function() {
 });
 
 socket.on('playerJoined', function(data) {
+	console.log("joined")
 	addCharacter(data.id, data.x, data.y, data.type, data.name);
 	const player = characters.currPlayer;
 	socket.emit('currentPlayerData', {
@@ -18,6 +19,7 @@ socket.on('playerJoined', function(data) {
 });
 
 socket.on('addPlayer', function(data) {
+	console.log("adding player")
 	addCharacter(data.id, data.x, data.y, data.type, data.name);
 });
 
