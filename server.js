@@ -42,7 +42,11 @@ io.on('connection', (socket) => {
 		console.log(`Socket (${socket.id}) has left room ${nextAvailiableRoom}`);
 		socketToRoomNum.delete(socket.id);
 		stack.push(socketRoom);
-  });
+	});
+	
+	socket.on('moving', (directionInfo) => {
+		socket.to(getRoomNum(socket.id)).emit('updateModelVelocity', socket.id, directionInfo);
+	})
 });
 
 http.listen(PORT, function() {

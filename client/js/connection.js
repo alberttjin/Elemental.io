@@ -19,12 +19,34 @@ socket.on('playerJoined', function(data) {
 });
 
 socket.on('addPlayer', function(data) {
+	console.log(characters)
 	addToSchema(data);
 });
 
 socket.on('disconnect', function() {
 	console.log('Disconnected from the server.');
 });
+
+socket.on('updateModelVelocity', (whichSocketID, directionInfo) => {
+	console.log(directionInfo.direction);
+	var requester = characters.allPlayers[whichSocketID];
+
+	switch (directionInfo.direction) {
+		case 'up':
+		moveUp(requester.body);
+		break;
+
+		case 'stop':
+		stopMove(requester.body);
+		break;
+
+	}
+	
+});
+
+function requestUpdateMovement(directionInfo) {
+	socket.emit('moving', directionInfo);
+}
 
 function sendAndStoreInitialData(playerName) {
 	const types = ['ice_wizard', 'fire_wizard', 'water_wizard'];
