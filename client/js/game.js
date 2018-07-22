@@ -71,13 +71,13 @@ gameState.create = function() {
     characters.type,
     characters.name
   );
-  console.log(characters.schema)
   addFromSchema();
   //set locked camera
   game.camera.follow(characters.currPlayer);
 
   //set controls
   characters.controls = setWASD();
+  console.log(characters)
 };
 
 gameState.update = function() {

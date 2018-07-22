@@ -16,7 +16,7 @@ function addCharacter(id, x, y, type, name) {
 }
 
 function addToSchema(schemaObject) {
-  if (!characters.schema) {
+  if (characters.schema === undefined) {
     characters.schema = [];
   }
   characters.schema.push(schemaObject);

@@ -19,7 +19,6 @@ socket.on('playerJoined', function(data) {
 });
 
 socket.on('addPlayer', function(data) {
-	console.log(characters)
 	addToSchema(data);
 });
 
