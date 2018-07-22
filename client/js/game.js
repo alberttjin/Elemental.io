@@ -12,6 +12,11 @@ characters: object for all character related things
     charactersGroup: the phaser group of characters, use this group to create a character
     allPlayers: object where keys are ids of players and objects are actual the actual players
     currPlayer: the current player on this client
+    id: temp id
+    x: temp x
+    y: temp y
+    type: temp type
+    name: temp name
 
 basicAttacks: object for all basic attack related thigns
   attributes:
@@ -42,75 +47,162 @@ gameState.preload = function() {
 };
 
 gameState.create = function() {
-  // bg = game.add.tileSprite(0, 0, 2000, 1000, 'sky');
-  // game.world.sendToBack(bg);
-  // game.world.setBounds(0, 0, 2000, 1000);
-  map = this.game.add.tilemap('map');
-  map.addTilesetImage('newForestTileset', 'tiles');
-  layer = map.createLayer('Tile Layer 1')
-  layer.resizeWorld();
-  game.world.sendToBack(map)
-  game.world.sendToBack(layer)
+	// bg = game.add.tileSprite(0, 0, 2000, 1000, 'sky');
+	// game.world.sendToBack(bg);
+	// game.world.setBounds(0, 0, 2000, 1000);
+	map = this.game.add.tilemap('map');
+	map.addTilesetImage('newForestTileset', 'tiles');
+	layer = map.createLayer('Tile Layer 1')
+	layer.resizeWorld();
+	game.world.sendToBack(map)
+	game.world.sendToBack(layer)
 
 
-  //start physics and enable physics for all characters
-  game.physics.startSystem(Phaser.Physics.ARCADE);
-  setCharacterPhysics();
-  setBasicAttackPhysics();
+	//start physics and enable physics for all characters
+	game.physics.startSystem(Phaser.Physics.ARCADE);
+	setCharacterPhysics();
+	setBasicAttackPhysics();
 
-  //add character and enemy character for testing
-  characters.currPlayer = addCharacter(1, game.world.centerX, game.world.centerY, 'doritos');
-  characters.allPlayers[2] = (addCharacter(2, game.world.centerX + 50, game.world.centerY + 50, 'doritos'));
+	//add character and enemy character for testing
+	characters.currPlayer = addCharacter(
+	characters.id,
+	characters.x,
+	characters.y,
+	characters.type,
+	characters.name
+	);
+	console.log(characters.schema)
+	addFromSchema();
+	//set locked camera
+	game.camera.follow(characters.currPlayer);
 
-  //set locked camera
-  game.camera.follow(characters.currPlayer);
+	//set controls
+	characters.controls = setWASD();
 
-  //set controls
-  characters.controls = setWASD();
+  	// characters.controls.up.onDown.add(function() {
+	// 	requestUpdateMovement({
+	// 		direction: 'up'
+	// 	});
+	// 	moveUp(characters.currPlayer.body);
+	// });
+
+	// characters.controls.down.onDown.add(function() {
+	// 	requestUpdateMovement({
+	// 		direction: 'down'
+	// 	});
+	// 	moveDown(characters.currPlayer.body);
+	// });
+
+	// characters.controls.left.onDown.add(function() {
+	// 	requestUpdateMovement({
+	// 		direction: 'left'
+	// 	});
+	// 	moveLeft(characters.currPlayer.body);
+	// });
+
+	// characters.controls.right.onDown.add(function() {
+	// 	requestUpdateMovement({
+	// 		direction: 'right'
+	// 	});
+	// 	moveRight(characters.currPlayer.body);
+	// });
+
+	// characters.controls.up.onUp.add(sendStopSignal);
+	// characters.controls.down.onUp.add(sendStopSignal);
+	// characters.controls.left.onUp.add(sendStopSignal);
+	// characters.controls.right.onUp.add(sendStopSignal);
 };
 
+function sendStopSignal() {
+	requestUpdateMovement({
+		direction: 'stop'
+	});
+	stopMove(characters.currPlayer.body);
+}
+
+function moveUp(body) {
+	body.velocity.y = -150;
+}
+
+function moveDown(body) {
+	body.velocity.y = 150;
+}
+
+function moveLeft(body) {
+	body.velocity.x = -150;
+}
+
+function moveRight(body) {
+	body.velocity.x = 150;
+}
+
+function stopMove(body) {
+	body.velocity.y = 0;
+	body.velocity.x = 0;
+}
+
 gameState.update = function() {
-  //set movement controls
-  if (characters.controls.up.isDown) {
+    var body = characters.currPlayer.body;
+    stopMove(body);
+    var up = down = left = right = true;
 
-    characters.currPlayer.body.velocity.y = -150;
-    characters.currPlayer.body.velocity.x = 0;
+    if (characters.controls.up.isDown) {
+        up = true;
+        requestUpdateMovement({
+            direction: 'up'
+        });
+        moveUp(body);
+    } else {
+        up = false;
+    }
 
-  } else if (characters.controls.down.isDown) {
+    if (characters.controls.down.isDown) {
+        down = true;
+        requestUpdateMovement({
+            direction: 'down'
+        });
+        moveDown(body);
+    } else {
+        down = false;
+    }
 
-    characters.currPlayer.body.velocity.y = 150;
-    characters.currPlayer.body.velocity.x = 0;
+    if (characters.controls.left.isDown) {
+        left = true;
+        requestUpdateMovement({
+            direction: 'left'
+        });
+        moveLeft(body);
+    } else {
+        left = false;
+    }
 
-  } else if (characters.controls.left.isDown) {
+    if (characters.controls.right.isDown) {
+        right = true;
+        requestUpdateMovement({
+            direction: 'right'
+        });
+        moveRight(body);
+    } else {
+        right = false;
+    }
 
-    characters.currPlayer.body.velocity.x = -150;
-    characters.currPlayer.body.velocity.y = 0;
+    if (!up && !down && !left && !right) {
+        requestUpdateMovement({
+            direction: 'stop'
+        });
+    }
 
-  } else if (characters.controls.right.isDown) {
+    //set player collision
+    var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
 
-    characters.currPlayer.body.velocity.x = 150;
-    characters.currPlayer.body.velocity.y = 0;
-
-  } else {
-
-    characters.currPlayer.body.velocity.x = 0;
-    characters.currPlayer.body.velocity.y = 0;
-
-  }
-
-  //set player collision
-  var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
-
-  //fire basic attack upon click
-  if (game.input.activePointer.isDown) {
-    console.log("mouse x" + game.input.activePointer.x)
-    console.log("mouse y" + game.input.activePointer.y)
+    //fire basic attack upon click
+    if (game.input.activePointer.isDown) {
     fireBasicAttack(
-      'doritos',
-      characters.currPlayer.x,
-      characters.currPlayer.y,
-      game.input.activePointer.worldX,
-      game.input.activePointer.worldY
+        'doritos',
+        characters.currPlayer.x,
+        characters.currPlayer.y,
+        game.input.activePointer.worldX,
+        game.input.activePointer.worldY
     );
-  }
+    }
 };

@@ -29,14 +29,30 @@ io.on('connection', (socket) => {
 	stack.push(nextAvailiableRoom);
 	console.log(`Socket (${socket.id}) has joined room ${nextAvailiableRoom}`);
 
-  	socket.on('disconnect', () => {
+  socket.on('newPlayer', function(data) {
+    socket.to(getRoomNum(socket.id)).emit('playerJoined', data);
+  });
+
+  socket.on('currentPlayerData', function(data) {
+    socket.to(data.newId).emit('addPlayer', data);
+  });
+
+  socket.on('disconnect', () => {
 		var socketRoom = socketToRoomNum.get(socket.id);
 		console.log(`Socket (${socket.id}) has left room ${nextAvailiableRoom}`);
 		socketToRoomNum.delete(socket.id);
 		stack.push(socketRoom);
-  });
+	});
+	
+	socket.on('moving', (directionInfo) => {
+		socket.to(getRoomNum(socket.id)).emit('updateModelVelocity', socket.id, directionInfo);
+	})
 });
 
 http.listen(PORT, function() {
 	console.log(`Listening on port: ${PORT}`);
 });
+
+function getRoomNum(socketId) {
+  return roomPrefix + socketToRoomNum.get(socketId);
+}
