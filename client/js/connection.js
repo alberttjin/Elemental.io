@@ -29,7 +29,11 @@ socket.on('disconnect', function() {
 
 socket.on('updateModelVelocity', (whichSocketID, directionInfo) => {
 	console.log(directionInfo.direction);
-	var requester = characters.allPlayers[whichSocketID];
+    var requester = characters.allPlayers[whichSocketID];
+    
+    if (requester === undefined) {
+        return;
+    }
 
 	switch (directionInfo.direction) {
 		case 'up':

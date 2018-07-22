@@ -79,38 +79,38 @@ gameState.create = function() {
 	//set controls
 	characters.controls = setWASD();
 
-  	characters.controls.up.onDown.add(function() {
-		requestUpdateMovement({
-			direction: 'up'
-		});
-		moveUp(characters.currPlayer.body);
-	});
+  	// characters.controls.up.onDown.add(function() {
+	// 	requestUpdateMovement({
+	// 		direction: 'up'
+	// 	});
+	// 	moveUp(characters.currPlayer.body);
+	// });
 
-	characters.controls.down.onDown.add(function() {
-		requestUpdateMovement({
-			direction: 'down'
-		});
-		moveDown(characters.currPlayer.body);
-	});
+	// characters.controls.down.onDown.add(function() {
+	// 	requestUpdateMovement({
+	// 		direction: 'down'
+	// 	});
+	// 	moveDown(characters.currPlayer.body);
+	// });
 
-	characters.controls.left.onDown.add(function() {
-		requestUpdateMovement({
-			direction: 'left'
-		});
-		moveLeft(characters.currPlayer.body);
-	});
+	// characters.controls.left.onDown.add(function() {
+	// 	requestUpdateMovement({
+	// 		direction: 'left'
+	// 	});
+	// 	moveLeft(characters.currPlayer.body);
+	// });
 
-	characters.controls.right.onDown.add(function() {
-		requestUpdateMovement({
-			direction: 'right'
-		});
-		moveRight(characters.currPlayer.body);
-	});
+	// characters.controls.right.onDown.add(function() {
+	// 	requestUpdateMovement({
+	// 		direction: 'right'
+	// 	});
+	// 	moveRight(characters.currPlayer.body);
+	// });
 
-	characters.controls.up.onUp.add(sendStopSignal);
-	characters.controls.down.onUp.add(sendStopSignal);
-	characters.controls.left.onUp.add(sendStopSignal);
-	characters.controls.right.onUp.add(sendStopSignal);
+	// characters.controls.up.onUp.add(sendStopSignal);
+	// characters.controls.down.onUp.add(sendStopSignal);
+	// characters.controls.left.onUp.add(sendStopSignal);
+	// characters.controls.right.onUp.add(sendStopSignal);
 };
 
 function sendStopSignal() {
@@ -122,21 +122,17 @@ function sendStopSignal() {
 
 function moveUp(body) {
 	body.velocity.y = -150;
-	body.velocity.x = 0;
 }
 
 function moveDown(body) {
 	body.velocity.y = 150;
-	body.velocity.x = 0;
 }
 
 function moveLeft(body) {
-	body.velocity.y = 0;
 	body.velocity.x = -150;
 }
 
 function moveRight(body) {
-	body.velocity.y = 0;
 	body.velocity.x = 150;
 }
 
@@ -146,18 +142,67 @@ function stopMove(body) {
 }
 
 gameState.update = function() {
+    var body = characters.currPlayer.body;
+    stopMove(body);
+    var up = down = left = right = true;
 
-  //set player collision
-  var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
+    if (characters.controls.up.isDown) {
+        up = true;
+        requestUpdateMovement({
+            direction: 'up'
+        });
+        moveUp(body);
+    } else {
+        up = false;
+    }
 
-  //fire basic attack upon click
-  if (game.input.activePointer.isDown) {
+    if (characters.controls.down.isDown) {
+        down = true;
+        requestUpdateMovement({
+            direction: 'down'
+        });
+        moveDown(body);
+    } else {
+        down = false;
+    }
+
+    if (characters.controls.left.isDown) {
+        left = true;
+        requestUpdateMovement({
+            direction: 'left'
+        });
+        moveLeft(body);
+    } else {
+        left = false;
+    }
+
+    if (characters.controls.right.isDown) {
+        right = true;
+        requestUpdateMovement({
+            direction: 'right'
+        });
+        moveRight(body);
+    } else {
+        right = false;
+    }
+
+    if (!up && !down && !left && !right) {
+        requestUpdateMovement({
+            direction: 'stop'
+        });
+    }
+
+    //set player collision
+    var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
+
+    //fire basic attack upon click
+    if (game.input.activePointer.isDown) {
     fireBasicAttack(
-      'doritos',
-      characters.currPlayer.x,
-      characters.currPlayer.y,
-      game.input.activePointer.worldX,
-      game.input.activePointer.worldY
+        'doritos',
+        characters.currPlayer.x,
+        characters.currPlayer.y,
+        game.input.activePointer.worldX,
+        game.input.activePointer.worldY
     );
-  }
+    }
 };
