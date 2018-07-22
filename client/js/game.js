@@ -86,6 +86,27 @@ gameState.create = function() {
 		moveUp(characters.currPlayer.body);
 	});
 
+	characters.controls.down.onDown.add(function() {
+		requestUpdateMovement({
+			direction: 'down'
+		});
+		moveDown(characters.currPlayer.body);
+	});
+
+	characters.controls.left.onDown.add(function() {
+		requestUpdateMovement({
+			direction: 'left'
+		});
+		moveLeft(characters.currPlayer.body);
+	});
+
+	characters.controls.right.onDown.add(function() {
+		requestUpdateMovement({
+			direction: 'right'
+		});
+		moveRight(characters.currPlayer.body);
+	});
+
 	characters.controls.up.onUp.add(sendStopSignal);
 	characters.controls.down.onUp.add(sendStopSignal);
 	characters.controls.left.onUp.add(sendStopSignal);
@@ -104,44 +125,27 @@ function moveUp(body) {
 	body.velocity.x = 0;
 }
 
+function moveDown(body) {
+	body.velocity.y = 150;
+	body.velocity.x = 0;
+}
+
+function moveLeft(body) {
+	body.velocity.y = 0;
+	body.velocity.x = -150;
+}
+
+function moveRight(body) {
+	body.velocity.y = 0;
+	body.velocity.x = 150;
+}
+
 function stopMove(body) {
 	body.velocity.y = 0;
 	body.velocity.x = 0;
 }
 
 gameState.update = function() {
-
-	const ctrls = characters.controls;
-	const stopMotion = ctrls.up.isUp && ctrls.down.isUp && ctrls.left.isUp && ctrls.right.isUp;
-
-  //set movement controls
-  if (stopMotion) {
-
-	stopMove(characters.currPlayer.body);
-
-  } else if (characters.controls.up.isDown) {
-
-    // requestUpdateMovement({
-	// 	direction: 'up'
-	// });
-	// moveUp(characters.currPlayer.body);
-	
-  } else if (characters.controls.down.isDown) {
-
-    characters.currPlayer.body.velocity.y = 150;
-    characters.currPlayer.body.velocity.x = 0;
-
-  } else if (characters.controls.left.isDown) {
-
-    characters.currPlayer.body.velocity.x = -150;
-    characters.currPlayer.body.velocity.y = 0;
-
-  } else if (characters.controls.right.isDown) {
-
-    characters.currPlayer.body.velocity.x = 150;
-    characters.currPlayer.body.velocity.y = 0;
-
-  } 
 
   //set player collision
   var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
