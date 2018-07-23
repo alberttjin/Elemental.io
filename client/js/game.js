@@ -79,7 +79,7 @@ gameState.create = function() {
 	//set controls
 	characters.controls = setWASD();
 
-  	characters.controls.up.onDown.add(function() {
+  characters.controls.up.onDown.add(function() {
 		requestUpdateMovement({
 			direction: 'up'
 		});
@@ -113,7 +113,7 @@ gameState.update = function() {
 
 	const ctrls = characters.controls;
 	const stopMotion = ctrls.up.isUp && ctrls.down.isUp && ctrls.left.isUp && ctrls.right.isUp;
-
+  console.log(characters.allPlayers[Object.keys(characters.allPlayers)[0]].body.velocity.y);
   //set movement controls
   if (stopMotion) {
 
@@ -125,7 +125,7 @@ gameState.update = function() {
 	// 	direction: 'up'
 	// });
 	// moveUp(characters.currPlayer.body);
-	
+
   } else if (characters.controls.down.isDown) {
 
     characters.currPlayer.body.velocity.y = 150;
@@ -141,7 +141,7 @@ gameState.update = function() {
     characters.currPlayer.body.velocity.x = 150;
     characters.currPlayer.body.velocity.y = 0;
 
-  } 
+  }
 
   //set player collision
   var hitPlayer = game.physics.arcade.collide(characters.charactersGroup, characters.charactersGroup)
