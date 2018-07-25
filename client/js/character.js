@@ -55,3 +55,64 @@ function setWASD() {
   }
   return wasd;
 }
+
+function setControls() {
+  characters.controls = setWASD();
+  const ctrls = characters.controls;
+
+  ctrls.up.onDown.add(function() {
+    sendMovementSignal('up', 0, -150);
+  });
+
+  ctrls.down.onDown.add(function() {
+    sendMovementSignal('down', 0, 150);
+  });
+
+  ctrls.left.onDown.add(function() {
+    sendMovementSignal('left', -150, 0);
+  });
+
+  ctrls.right.onDown.add(function() {
+    sendMovementSignal('right', 150, 0);
+  });
+
+  ctrls.up.onUp.add(function() {
+    sendMovementSignal('stop', 0, 0);
+  });
+
+  ctrls.down.onUp.add(function() {
+    sendMovementSignal('stop', 0, 0);
+  });
+
+  ctrls.left.onUp.add(function() {
+    sendMovementSignal('stop', 0, 0);
+  });
+
+  ctrls.right.onUp.add(function() {
+    sendMovementSignal('stop', 0, 0);
+  });
+}
+
+function sendMovementSignal(direction, xVelocity, yVelocity) {
+  const ctrls = characters.controls;
+  const stopMotion = ctrls.up.isUp && ctrls.down.isUp && ctrls.left.isUp && ctrls.right.isUp;
+  if (direction === 'stop' && !stopMotion) {
+    return;
+  }
+	requestUpdateMovement({
+		direction: direction
+	});
+	move(characters.currPlayer.body, xVelocity, yVelocity);
+}
+
+function sendStopSignal() {
+  requestUpdateMovement({
+    direction: 'stop',
+  });
+  move(characters.currPlayer.body, 0, 0);
+}
+
+function move(body, xVelocity, yVelocity) {
+  body.velocity.y = yVelocity;
+  body.velocity.x = xVelocity;
+}

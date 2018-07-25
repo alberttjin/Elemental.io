@@ -33,15 +33,27 @@ socket.on('updateModelVelocity', (whichSocketID, directionInfo) => {
 
 	switch (directionInfo.direction) {
 		case 'up':
-		moveUp(requester.body);
+		move(requester.body, 0, -150);
+		break;
+
+		case 'down':
+		move(requester.body, 0, 150);
+		break;
+
+		case 'left':
+		move(requester.body, -150, 0);
+		break;
+
+		case 'right':
+		move(requester.body, 150, 0);
 		break;
 
 		case 'stop':
-		stopMove(requester.body);
+		move(requester.body, 0, 0);
 		break;
 
 	}
-	
+
 });
 
 function requestUpdateMovement(directionInfo) {
