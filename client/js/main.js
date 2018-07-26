@@ -1,4 +1,4 @@
-var game = new Phaser.Game('100', '100', Phaser.AUTO, document.getElementById('elemental_game'));
+var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.AUTO, document.getElementById('elemental_game'));
 // var config = {
 //   width: 1000,
 //   height: 1000,

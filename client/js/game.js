@@ -34,7 +34,7 @@ gameState.init = function() {
   game.stage.disableVisibilityChange = true;
   //initialize characters and attacks
   initializeCharacters();
-  initializeBasicAttack('doritos', 0, 1000, 540);
+  initializeBasicAttack('doritos', STARTING_FIRE_TIME, FIRING_DELAY, FIRING_SPEED);
 
 };
 
@@ -71,7 +71,6 @@ gameState.create = function() {
 	characters.type,
 	characters.name
 	);
-	console.log(characters.schema)
 	addFromSchema();
 	//set locked camera
 	game.camera.follow(characters.currPlayer);

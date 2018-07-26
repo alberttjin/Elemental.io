@@ -9,7 +9,7 @@ function addCharacter(id, x, y, type, name) {
   const newChar = characters.charactersGroup.create(x, y, type);
   newChar.id = id;
   newChar.scale.setTo(0.25, 0.25)
-  newChar.setHealth(3);
+  newChar.setHealth(HEALTH);
   newChar.type = type;
   characters.allPlayers[id] = newChar;
   return newChar;
@@ -61,19 +61,19 @@ function setControls() {
   const ctrls = characters.controls;
 
   ctrls.up.onDown.add(function() {
-    sendMovementSignal('up', 0, -150);
+    sendMovementSignal('up', 0, -Y_VELOCITY);
   });
 
   ctrls.down.onDown.add(function() {
-    sendMovementSignal('down', 0, 150);
+    sendMovementSignal('down', 0, Y_VELOCITY);
   });
 
   ctrls.left.onDown.add(function() {
-    sendMovementSignal('left', -150, 0);
+    sendMovementSignal('left', -X_VELOCITY, 0);
   });
 
   ctrls.right.onDown.add(function() {
-    sendMovementSignal('right', 150, 0);
+    sendMovementSignal('right', X_VELOCITY, 0);
   });
 
   ctrls.up.onUp.add(function() {
