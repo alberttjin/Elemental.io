@@ -38,8 +38,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-		var socketRoom = socketToRoomNum.get(socket.id);
-		console.log(`Socket (${socket.id}) has left room ${nextAvailiableRoom}`);
+        var socketRoom = socketToRoomNum.get(socket.id);
+        socket.to(getRoomNum(socket.id)).emit('playerLeft', socket.id);
+		console.log(`Socket (${socket.id}) has left room ${socketRoom}`);
 		socketToRoomNum.delete(socket.id);
 		stack.push(socketRoom);
 	});

@@ -15,6 +15,12 @@ function addCharacter(id, x, y, type, name) {
   return newChar;
 }
 
+function removeCharacter(id) {
+    temp = characters.allPlayers[id];
+    delete characters.allPlayers[id];
+    return temp;
+}
+
 function addToSchema(schemaObject) {
   if (characters.schema === undefined) {
     characters.schema = [];
