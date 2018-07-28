@@ -105,12 +105,12 @@ function sendMovementSignal(direction, xVelocity, yVelocity) {
 	move(characters.currPlayer.body, xVelocity, yVelocity);
 }
 
-function sendStopSignal() {
-  requestUpdateMovement({
-    direction: 'stop',
-  });
-  move(characters.currPlayer.body, 0, 0);
-}
+// function sendStopSignal() {
+//   requestUpdateMovement({
+//     direction: 'stop',
+//   });
+//   move(characters.currPlayer.body, 0, 0);
+// }
 
 function move(body, xVelocity, yVelocity) {
   body.velocity.y = yVelocity;

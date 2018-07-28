@@ -59,7 +59,8 @@ gameState.create = function() {
 
 
 	//start physics and enable physics for all characters
-	game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.defaultRestitution = 0.8;
 	setCharacterPhysics();
 	setBasicAttackPhysics();
 
@@ -71,12 +72,15 @@ gameState.create = function() {
 	characters.type,
 	characters.name
 	);
-	addFromSchema();
+    addFromSchema();
+
+    game.physics.p2.enable(characters.charactersGroup);
+    
 	//set locked camera
 	game.camera.follow(characters.currPlayer);
 
 	//set controls
-  setControls();
+    setControls();
 };
 
 
