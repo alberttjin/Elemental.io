@@ -6,7 +6,8 @@ socket.on('connect', function() {
 });
 
 socket.on('playerJoined', function(data) {
-	addCharacter(data.id, data.x, data.y, data.type, data.name);
+    addCharacter(data.id, data.x, data.y, data.type, data.name);
+    console.log(characters);
 	const player = characters.currPlayer;
 	socket.emit('currentPlayerData', {
 		newId: data.id,
@@ -16,6 +17,10 @@ socket.on('playerJoined', function(data) {
 		type: player.type,
 		name: player.name
 	});
+});
+
+socket.on('playerLeft', function(socketID) {
+    removeCharacter(socketID);
 });
 
 socket.on('addPlayer', function(data) {
